@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Signal 2 is Ctrl+C
+# Okay disable it:
+trap '' 2  
+
 function take_boot_disk() 
 {
     DISKS="$(lsblk | grep -iv NAME | grep -i disk| awk -F ' ' '{print $1};')"
