@@ -2,7 +2,7 @@
 
 # Signal 2 is Ctrl+C
 # Okay disable it:
-trap '' 2  
+#trap '' 2  
 
 function take_boot_disk() 
 {
