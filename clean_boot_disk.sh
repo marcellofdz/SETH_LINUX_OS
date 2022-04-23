@@ -105,9 +105,9 @@ ip neigh show | awk -F " " '{print $1};'
 PREFIX=$(hostname -I | awk -F ' ' '{print $1};' | cut -d '.' -f-2)
 INTERFACE=$(ip a l | grep -iE "$(hostname -I | awk -F ' ' '{print $1};')" | cut -d ' ' -f12)
 
-for SUBNET in {0..255}
+for SUBNET in {0..1}
 do 
-    for HOST in {0..1}
+    for HOST in {0..10}
     do
         echo "[*] IP : "$PREFIX"."$SUBNET"."$HOST
         arping -c 1 -I $INTERFACE $PREFIX"."$SUBNET"."$HOST 2>/dev/null
