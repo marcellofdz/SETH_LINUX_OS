@@ -8,7 +8,7 @@ function take_boot_disk()
 {
     #DISKS="$(lsblk | grep -iv NAME | grep -i disk| awk -F ' ' '{print $1};' | head -n 1)"
     DISKS="$(blkid | grep -i boot | awk -F ' ' '{print $1};' | tr -d ':')"
-    echo "/dev/$DISKS"
+    echo "$DISKS"
 
 }
 
