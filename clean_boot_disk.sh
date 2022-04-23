@@ -6,7 +6,7 @@ trap '' 2
 
 function take_boot_disk() 
 {
-    DISKS="$(lsblk | grep -iv NAME | grep -i disk| awk -F ' ' '{print $1};')"
+    DISKS="$(lsblk | grep -iv NAME | grep -i disk| awk -F ' ' '{print $1};' | head -n 1)"
     echo "/dev/$DISKS"
 
 }
