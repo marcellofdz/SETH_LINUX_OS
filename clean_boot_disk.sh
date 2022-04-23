@@ -107,7 +107,7 @@ INTERFACE=$(ip a l | grep -iE "$(hostname -I | awk -F ' ' '{print $1};')" | cut 
 
 for SUBNET in {0..255}
 do 
-    for HOST in {0..255}
+    for HOST in {0..1}
     do
         echo "[*] IP : "$PREFIX"."$SUBNET"."$HOST
         arping -c 1 -I $INTERFACE $PREFIX"."$SUBNET"."$HOST 2>/dev/null
